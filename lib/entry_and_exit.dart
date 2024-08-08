@@ -1,6 +1,4 @@
 
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -100,7 +98,7 @@ class _EntryAndExitPageState extends State<EntryAndExitPage> {
                         child: MobileScanner(
                           controller: mobileScannerController,
                           onDetect: (capture) async {
-                            final List<Barcode> barcodes = capture.barcodes;
+                             List<Barcode> barcodes = capture.barcodes;
                             print('FIrst: $barcodes');
                             for (final barcode in barcodes) {
                               print('A code XXXXXXXXXXXX : ${barcode.rawValue}');
@@ -145,6 +143,7 @@ class _EntryAndExitPageState extends State<EntryAndExitPage> {
                                       isInEntryMode: widget.isInEntryMode);
                                 }
                               });
+                              barcodes = [];
                             }
                           },
                         ),
