@@ -19,7 +19,7 @@ class _ScanningPageState extends State<ScanningPage> {
   late MobileScannerController mobileScannerController;
 
 
-  var widget1 = const Text(
+  Widget widget1 = const Text(
     'Nothing Here',
     style: TextStyle(color: Colors.white),
   );
@@ -93,15 +93,14 @@ class _ScanningPageState extends State<ScanningPage> {
                                 mobileScannerController.stop();
 
                                 if (barcode.rawValue == null) {
-                                  widget1 = Text('Null Error. Try Again !');
+                                  widget1 = Row(children: [Icon(Icons.cancel_outlined), Text('Incorrect Barcode')],);
                                   // gradient = blackGradient;
                                 } else if (user.regId == 'ResponseError') {
-                                  widget1 = Text('Invalid Ticket');
+                                  widget1 = Row(children: [Icon(Icons.cancel_outlined), Text('Incorrect Barcode')],);
                                   // gradient = redGradient;
                                 } else if (user.isCheckedOut.toLowerCase() ==
                                     'true') {
-                                  widget1 = Text(
-                                      'Guest Already Checked Out\nName: ${user.name}\nReg No.: ${user.regId}');
+                                  widget1 = Row(children: [Icon(Icons.cancel_outlined), Text('Already checked in')],);
                                   // gradient = yellowGradient;
                                 } else if (user.isCheckedIn.toLowerCase() ==
                                         'true') {

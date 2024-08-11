@@ -17,7 +17,7 @@ class WelcomePage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset('assets/logo.jpg',height: 52,),
+                  Image.asset('assets/images/logo.jpg',height: 52,),
                   const Column(
                     children: [
                       Text('Scan and validate ',style: TextStyle(fontSize: 28,fontWeight: FontWeight.w900),),

@@ -16,13 +16,13 @@ class ScanPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Image.asset(
-                'assets/logo.jpg',
+                'assets/images/logo.jpg',
                 height: 34,
                 width: double.infinity,
               ),
 
               Column(children: [ SvgPicture.asset(
-                'assets/ticket-entry.svg',
+                'assets/images/ticket-entry.svg',
                 height: 180,
                 width: double.infinity,
               ),const Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stadia_scanner/scan_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -15,8 +16,6 @@ class _LoginPageState extends State<LoginPage> {
   bool rememberMe = false;
 
 
-  // static const String univId = 'foundanand';
-  // static const String univPass = '@Strae#@cet3';
   static const String univId = 'q';
   static const String univPass = 'q';
 
@@ -24,11 +23,43 @@ class _LoginPageState extends State<LoginPage> {
   final passController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    _loadUserCredentials();
+  }
+
+  @override
   void dispose() {
     idController.dispose();
     passController.dispose();
     super.dispose();
   }
+
+  Future<void> _loadUserCredentials() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      rememberMe = prefs.getBool('rememberMe') ?? false;
+      if (rememberMe) {
+        idController.text = prefs.getString('id') ?? '';
+        passController.text = prefs.getString('pass') ?? '';
+      }
+    });
+  }
+
+
+  Future<void> _saveUserCredentials() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (rememberMe) {
+      await prefs.setString('id', idController.text);
+      await prefs.setString('pass', passController.text);
+    } else {
+      await prefs.remove('id');
+      await prefs.remove('pass');
+    }
+    await prefs.setBool('rememberMe', rememberMe);
+  }
+
+
 
 
   Future<void> _validator(BuildContext context) async {
@@ -52,7 +83,9 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       );
+
     } else {
+      await _saveUserCredentials();
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => const ScanPage(),
@@ -111,9 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                               TextField(
                                 controller: passController,
                                 obscureText: true,
-                                // decoration:
-                                //     const InputDecoration(labelText: "Password"),
-                                // style: const TextStyle(color: Colors.white),
+
                               ),
 
                               Row(
@@ -137,7 +168,6 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
 
-
                       ElevatedButton(
                           style: ButtonStyle(
                             backgroundColor:
@@ -146,7 +176,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           onPressed: () {
                             _validator(context);
-
                           },
                           child: const Text(
                             'Login',
