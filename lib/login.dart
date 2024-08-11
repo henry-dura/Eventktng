@@ -20,10 +20,16 @@ class _LoginPageState extends State<LoginPage> {
   static const String univId = 'q';
   static const String univPass = 'q';
 
-  var idController = TextEditingController();
-  var passController = TextEditingController();
-  var collecController = TextEditingController();
-  var dbController = TextEditingController();
+  final idController = TextEditingController();
+  final passController = TextEditingController();
+
+  @override
+  void dispose() {
+    idController.dispose();
+    passController.dispose();
+    super.dispose();
+  }
+
 
   Future<void> _validator(BuildContext context) async {
     var id = idController.text.trim();
@@ -60,95 +66,98 @@ class _LoginPageState extends State<LoginPage> {
     var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: const Color(0xFFFF6600),
 
-        body: Column(
-          children: [
-            SizedBox(
-              height: size.height / 1.5,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: size.height / 10,
-                    ),
-                    const Text(
-                      'Login',
-                      style: TextStyle(
-                          color: Color(0XFF333333),
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    Column(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: size.height / 1.5,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: size.height / 10,
+                      ),
+                      const Text(
+                        'Login',
+                        style: TextStyle(
+                            color: Color(0XFF333333),
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700),
+                      ),
+                      Column(
 
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Username',style: TextStyle(color: Colors.white,fontSize: 16)),
-                            TextField(
-                              controller: idController,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Username',style: TextStyle(color: Colors.white,fontSize: 16)),
+                              TextField(
+                                controller: idController,
 
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Password',style: TextStyle(color: Colors.white,fontSize: 16)),
-                            TextField(
-                              controller: passController,
-                              obscureText: true,
-                              // decoration:
-                              //     const InputDecoration(labelText: "Password"),
-                              // style: const TextStyle(color: Colors.white),
-                            ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Password',style: TextStyle(color: Colors.white,fontSize: 16)),
+                              TextField(
+                                controller: passController,
+                                obscureText: true,
+                                // decoration:
+                                //     const InputDecoration(labelText: "Password"),
+                                // style: const TextStyle(color: Colors.white),
+                              ),
 
-                            Row(
-                              children: [
-                                Checkbox(
-                                  value: rememberMe,
-                                  side: MaterialStateBorderSide.resolveWith(
-                                        (states) => const BorderSide(width: 1.0, color: Colors.white),
+                              Row(
+                                children: [
+                                  Checkbox(
+                                    value: rememberMe,
+                                    side: MaterialStateBorderSide.resolveWith(
+                                          (states) => const BorderSide(width: 1.0, color: Colors.white),
+                                    ),
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        rememberMe = value ?? false;
+                                      });
+                                    },
                                   ),
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      rememberMe = value ?? false;
-                                    });
-                                  },
-                                ),
-                                const Text("Remember Me",style: TextStyle(color: Color(0xFFFFFFFF)),)
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
+                                  const Text("Remember Me",style: TextStyle(color: Color(0xFFFFFFFF)),)
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
 
 
-                    ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(const Color(0xFF111111)),
-                          padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.symmetric(vertical: 18)),
-                        ),
-                        onPressed: () {
-                          _validator(context);
+                      ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(const Color(0xFF111111)),
+                            padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.symmetric(vertical: 18)),
+                          ),
+                          onPressed: () {
+                            _validator(context);
 
-                        },
-                        child: const Text(
-                          'Login',
-                          style: TextStyle(fontSize: 22),
-                        )),
-                  ],
+                          },
+                          child: const Text(
+                            'Login',
+                            style: TextStyle(fontSize: 22),
+                          )),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
