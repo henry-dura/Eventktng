@@ -12,11 +12,11 @@ class WelcomePage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: size.width/10),
         child: Center(
           child: SizedBox(
-            height: size.height/2,
+            height: 350,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('IMAGE'),
+                Image.asset('assets/logo.jpg',height: 52,),
                 const Column(
                   children: [
                     Text('Scan and validate ',style: TextStyle(fontSize: 28,fontWeight: FontWeight.w900),),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stadia_scanner/scan_page.dart';
 
-import 'home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => const HomePage(),
+          builder: (context) => const ScanPage(),
         ),
       );
     }
@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
     var size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xFFFF6600),
+        backgroundColor: const Color(0xFFFF6600),
 
         body: Column(
           children: [
@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       height: size.height / 10,
                     ),
-                    Text(
+                    const Text(
                       'Login',
                       style: TextStyle(
                           color: Color(0XFF333333),
@@ -88,18 +88,18 @@ class _LoginPageState extends State<LoginPage> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Username',style: const TextStyle(color: Colors.white,fontSize: 16)),
+                            const Text('Username',style: TextStyle(color: Colors.white,fontSize: 16)),
                             TextField(
                               controller: idController,
 
                             ),
                           ],
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Password',style: const TextStyle(color: Colors.white,fontSize: 16)),
+                            const Text('Password',style: TextStyle(color: Colors.white,fontSize: 16)),
                             TextField(
                               controller: passController,
                               obscureText: true,
@@ -113,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Checkbox(
                                   value: rememberMe,
                                   side: MaterialStateBorderSide.resolveWith(
-                                        (states) => BorderSide(width: 1.0, color: Colors.white),
+                                        (states) => const BorderSide(width: 1.0, color: Colors.white),
                                   ),
                                   onChanged: (bool? value) {
                                     setState(() {
@@ -121,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                                     });
                                   },
                                 ),
-                                Text("Remember Me",style: TextStyle(color: Color(0xFFFFFFFF)),)
+                                const Text("Remember Me",style: TextStyle(color: Color(0xFFFFFFFF)),)
                               ],
                             ),
                           ],
@@ -133,13 +133,14 @@ class _LoginPageState extends State<LoginPage> {
                     ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(Color(0xFF111111)),
-                          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(vertical: 18)),
+                              MaterialStateProperty.all(const Color(0xFF111111)),
+                          padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.symmetric(vertical: 18)),
                         ),
                         onPressed: () {
                           _validator(context);
+
                         },
-                        child: Text(
+                        child: const Text(
                           'Login',
                           style: TextStyle(fontSize: 22),
                         )),

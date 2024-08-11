@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                             onPressed: () => Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    const EntryAndExitPage(isInEntryMode: true),
+                                    const EntryAndExitPage(),
                               ),
                             ),
                             icon: const Icon(
@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                           onPressed: () => Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const EntryAndExitPage(isInEntryMode: false),
+                                  const EntryAndExitPage(),
                             ),
                           ),
                           icon: const Icon(

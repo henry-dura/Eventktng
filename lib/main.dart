@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          fillColor: Color(0xFFFF6600),
+          fillColor: const Color(0xFFFF6600),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
           // labelStyle: const TextStyle(color: Colors.white),
           // floatingLabelStyle: const TextStyle(color: Colors.deepPurpleAccent),

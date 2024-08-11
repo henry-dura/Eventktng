@@ -6,10 +6,10 @@ import 'commons.dart';
 import 'database/database.dart';
 
 class EntryAndExitPage extends StatefulWidget {
-  final bool isInEntryMode;
+
   const EntryAndExitPage({
     super.key,
-    required this.isInEntryMode,
+
   });
 
   @override
@@ -17,12 +17,14 @@ class EntryAndExitPage extends StatefulWidget {
 }
 
 class _EntryAndExitPageState extends State<EntryAndExitPage> {
-  bool isScanning = false;
+  bool isScanning = true;
+  late MobileScannerController mobileScannerController;
 
-  var mobileScannerController = MobileScannerController(
-    detectionSpeed: DetectionSpeed.noDuplicates,
-    autoStart: false,
-  )..stop();
+
+  // var mobileScannerController = MobileScannerController(
+  //   detectionSpeed: DetectionSpeed.noDuplicates,
+  //   autoStart: true,
+  // );
 
   var gradient = const LinearGradient(
     colors: [Colors.black, Colors.black54],
@@ -35,21 +37,39 @@ class _EntryAndExitPageState extends State<EntryAndExitPage> {
     style: TextStyle(color: Colors.white),
   );
 
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the MobileScannerController
+    mobileScannerController = MobileScannerController(
+      detectionSpeed: DetectionSpeed.noDuplicates,
+      autoStart: true,
+    );
+  }
+
+  @override
+  void dispose() {
+    // Dispose the MobileScannerController to free resources
+    mobileScannerController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.white12,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        foregroundColor: Colors.white,
-        title: Text(
-          widget.isInEntryMode ? 'Entry' : 'Exit',
-          style: const TextStyle(color: Colors.white),
+
+        title: const Text(
+           'Entry Tickets',
+          style: TextStyle(color: Color(0xFF000000),fontSize: 28,fontWeight: FontWeight.w500),
         ),
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         // backgroundColor: widget.isInEntryMode
         //     ? Colors.green.withOpacity(0.8)
         //     : Colors.redAccent.withOpacity(0.8),
@@ -60,18 +80,19 @@ class _EntryAndExitPageState extends State<EntryAndExitPage> {
           SizedBox(
             height: size.height,
             width: size.height,
-            child: RotatedBox(
-              quarterTurns: !widget.isInEntryMode ? 1 : 1,
-              child: ImageFiltered(
-                enabled: !widget.isInEntryMode,
-                imageFilter:
-                    ColorFilter.mode(Colors.pinkAccent.shade700, BlendMode.color),
-                child: LottieBuilder.asset(
-                  'assets/bg.json',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+
+            // child: RotatedBox(
+            //   quarterTurns:  1 ,
+            //   child: ImageFiltered(
+            //
+            //     imageFilter:
+            //         ColorFilter.mode(Colors.pinkAccent.shade700, BlendMode.color),
+            //     child: LottieBuilder.asset(
+            //       'assets/bg.json',
+            //       fit: BoxFit.cover,
+            //     ),
+            //   ),
+            // ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 48, 8, 0),
@@ -120,27 +141,25 @@ class _EntryAndExitPageState extends State<EntryAndExitPage> {
                                       'Guest Already Checked Out\nName: ${user.name}\nReg No.: ${user.regId}');
                                   gradient = yellowGradient;
                                 } else if (user.isCheckedIn.toLowerCase() ==
-                                        'true' &&
-                                    widget.isInEntryMode) {
+                                        'true') {
                                   widget1 = myText(
                                       'Guest Already Checked In\nName: ${user.name}\nReg No.: ${user.regId}');
                                   gradient = yellowGradient;
                                 } else if (user.isCheckedIn.toLowerCase() ==
-                                        'true' &&
-                                    !widget.isInEntryMode) {
+                                        'true') {
                                   widget1 = myText(
                                       'Name: ${user.name}\nReg No.: ${user.regId}');
                                   gradient = greenGradient;
-                                  MongoDatabase.update(
-                                      regId: barcode.rawValue!,
-                                      isInEntryMode: widget.isInEntryMode);
+                                  // MongoDatabase.update(
+                                  //     regId: barcode.rawValue!,
+                                  //     isInEntryMode: widget.isInEntryMode);
                                 } else {
                                   widget1 = myText(
                                       'Name: ${user.name}\nReg No.: ${user.regId}');
                                   gradient = greenGradient;
-                                  MongoDatabase.update(
-                                      regId: barcode.rawValue!,
-                                      isInEntryMode: widget.isInEntryMode);
+                                  // MongoDatabase.update(
+                                  //     regId: barcode.rawValue!,
+                                  //     isInEntryMode: widget.isInEntryMode);
                                 }
                               });
                               barcodes = [];
@@ -161,8 +180,7 @@ class _EntryAndExitPageState extends State<EntryAndExitPage> {
                   padding: const EdgeInsets.all(16),
                   child: Center(child: widget1),
                 ),
-                isScanning
-                    ? ElevatedButton.icon(
+                ElevatedButton.icon(
                         style: ButtonStyle(
                           shape: MaterialStatePropertyAll(
                             RoundedRectangleBorder(
@@ -179,38 +197,39 @@ class _EntryAndExitPageState extends State<EntryAndExitPage> {
                               'Nothing Here',
                               style: TextStyle(color: Colors.white),
                             );
-                            gradient = blackGradient;
+                            Navigator.pop(context);
+                            // gradient = blackGradient;
                           });
                         },
                         icon: const Icon(Icons.pages_rounded),
                         label: const Text('Stop'),
                       )
-                    : Hero(
-                        tag: widget.isInEntryMode ? 'entry' : 'exit',
-                        child: ElevatedButton.icon(
-                          style: ButtonStyle(
-                            shape: MaterialStatePropertyAll(
-                              RoundedRectangleBorder(
-                                side: const BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            mobileScannerController.start();
-                            setState(() {
-                              isScanning = true;
-                              widget1 = const Text(
-                                'Nothing Here',
-                                style: TextStyle(color: Colors.white),
-                              );
-                              gradient = blackGradient;
-                            });
-                          },
-                          icon: const Icon(Icons.document_scanner_outlined),
-                          label: const Text('Scan'),
-                        ),
-                      ),
+                     // Hero(
+                     //    tag: 'entry',
+                     //    child: ElevatedButton.icon(
+                     //      style: ButtonStyle(
+                     //        shape: MaterialStatePropertyAll(
+                     //          RoundedRectangleBorder(
+                     //            side: const BorderSide(color: Colors.white),
+                     //            borderRadius: BorderRadius.circular(16),
+                     //          ),
+                     //        ),
+                     //      ),
+                     //      onPressed: () {
+                     //        mobileScannerController.start();
+                     //        setState(() {
+                     //          isScanning = true;
+                     //          widget1 = const Text(
+                     //            'Nothing Here',
+                     //            style: TextStyle(color: Colors.white),
+                     //          );
+                     //          gradient = blackGradient;
+                     //        });
+                     //      },
+                     //      icon: const Icon(Icons.document_scanner_outlined),
+                     //      label: const Text('Scan'),
+                     //    ),
+                     //  ),
               ],
             ),
           ),
