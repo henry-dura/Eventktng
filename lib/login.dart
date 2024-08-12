@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stadia_scanner/scan_page.dart';
-
 import 'blocs/login/login_bloc.dart';
 import 'blocs/login/login_event.dart';
 import 'blocs/login/login_state.dart';
@@ -16,12 +15,10 @@ class LoginPage extends StatelessWidget {
     return FutureBuilder<SharedPreferences>(
       future: SharedPreferences.getInstance(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return const Center(child: Text('Failed to load preferences'));
+         if (snapshot.hasError) {
+          return const Center(child: Text('Failed to load Email and password'));
         } else if (!snapshot.hasData) {
-          return const Center(child: Text('No preferences found'));
+          return const Center(child: Text('No Login details found'));
         }
 
         final prefs = snapshot.data!;
