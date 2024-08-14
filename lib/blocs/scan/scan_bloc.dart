@@ -1,4 +1,3 @@
-// scanning_bloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stadia_scanner/blocs/scan/scan_event.dart';
 import 'package:stadia_scanner/blocs/scan/scan_state.dart';

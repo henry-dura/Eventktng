@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.8.22' // Update to a consistent Kotlin version
+    ext.kotlin_version = '1.8.22'
     repositories {
         google()
         mavenCentral()
@@ -24,21 +24,6 @@ subprojects {
 }
 subprojects {
     project.evaluationDependsOn(':app')
-}
-
-// Add resolution strategy to force a specific version of Kotlin
-configurations.all {
-    resolutionStrategy.eachDependency { details ->
-        if (details.requested.group == 'org.jetbrains.kotlin') {
-            details.useVersion '1.8.22'
-        }
-    }
-}
-
-// Exclude conflicting dependencies
-configurations.all {
-    exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
-    exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
 }
 
 tasks.register("clean", Delete) {
