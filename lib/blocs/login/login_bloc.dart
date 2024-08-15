@@ -1,7 +1,7 @@
 // login_bloc.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import '../../secrets/secret.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
@@ -19,10 +19,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   void _onLoadUserCredentials(
       LoadUserCredentials event, Emitter<LoginState> emit) {
     final rememberMe = prefs.getBool('rememberMe') ?? false;
-    final id = rememberMe ? prefs.getString('id') ?? '' : '';
+    final userName = rememberMe ? prefs.getString('userName') ?? '' : '';
     final pass = rememberMe ? prefs.getString('pass') ?? '' : '';
 
-    emit(LoginLoaded(id: id, pass: pass, rememberMe: rememberMe));
+    emit(LoginLoaded(userName: userName, pass: pass, rememberMe: rememberMe));
   }
 
   void _onRememberMeChanged(
@@ -35,15 +35,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Future<void> _onLoginButtonPressed(
       LoginButtonPressed event, Emitter<LoginState> emit) async {
-    if (event.id == 'q' && event.pass == 'q') {
+    if (event.userName == secretUserName && event.pass == secretPassword) {
       if (state is LoginLoaded) {
         final currentState = state as LoginLoaded;
         await prefs.setBool('rememberMe', currentState.rememberMe);
         if (currentState.rememberMe) {
-          await prefs.setString('id', event.id);
+          await prefs.setString('userName', event.userName);
           await prefs.setString('pass', event.pass);
         } else {
-          await prefs.remove('id');
+          await prefs.remove('userName');
           await prefs.remove('pass');
         }
       }

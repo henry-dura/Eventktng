@@ -20,13 +20,13 @@ class RememberMeChanged extends LoginEvent {
 }
 
 class LoginButtonPressed extends LoginEvent {
-  final String id;
+  final String userName;
   final String pass;
 
-  const LoginButtonPressed({required this.id, required this.pass});
+  const LoginButtonPressed({required this.userName, required this.pass});
 
   @override
-  List<Object> get props => [id, pass];
+  List<Object> get props => [userName, pass];
 }
 
 class ToggleObscureText extends LoginEvent {}

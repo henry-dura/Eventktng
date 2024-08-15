@@ -87,7 +87,7 @@ class _LoginFormState extends State<LoginForm> {
                               BlocBuilder<LoginBloc, LoginState>(
                                 builder: (context, state) {
                                   if (state is LoginLoaded && idController.text.isEmpty) {
-                                    idController.text = state.id;
+                                    idController.text = state.userName;
                                   }
                                   return TextField(
                                     controller: idController,
@@ -162,7 +162,7 @@ class _LoginFormState extends State<LoginForm> {
                         onPressed: () {
                           final id = idController.text.trim();
                           final pass = passController.text.trim();
-                          context.read<LoginBloc>().add(LoginButtonPressed(id: id, pass: pass));
+                          context.read<LoginBloc>().add(LoginButtonPressed(userName: id, pass: pass));
                         },
                         child: const Text(
                           'Login',

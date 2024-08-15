@@ -11,13 +11,13 @@ abstract class LoginState extends Equatable {
 class LoginInitial extends LoginState {}
 
 class LoginLoaded extends LoginState {
-  final String id;
+  final String userName;
   final String pass;
   final bool rememberMe;
   final bool obscureText;
 
   const LoginLoaded({
-    required this.id,
+    required this.userName,
     required this.pass,
     required this.rememberMe,
     this.obscureText = true,
@@ -30,7 +30,7 @@ class LoginLoaded extends LoginState {
     bool? obscureText,
   }) {
     return LoginLoaded(
-      id: id ?? this.id,
+      userName: id ?? this.userName,
       pass: pass ?? this.pass,
       rememberMe: rememberMe ?? this.rememberMe,
       obscureText: obscureText ?? this.obscureText,
@@ -38,7 +38,7 @@ class LoginLoaded extends LoginState {
   }
 
   @override
-  List<Object> get props => [id, pass, rememberMe, obscureText];
+  List<Object> get props => [userName, pass, rememberMe, obscureText];
 }
 
 class LoginSuccess extends LoginState {}
