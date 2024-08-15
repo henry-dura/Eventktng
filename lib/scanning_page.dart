@@ -4,10 +4,10 @@ import 'blocs/scan/scan_bloc.dart';
 import 'blocs/scan/scan_event.dart';
 import 'blocs/scan/scan_state.dart';
 import 'data/repository.dart';
-import 'package:mobile_scanner/mobile_scanner.dart'; // Ensure you have this package imported
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 
-// Define your Repository, ScanningBloc, ScanningState, and other necessary classes here
+
 
 class ScanningPage extends StatefulWidget {
   const ScanningPage({super.key});
@@ -102,8 +102,8 @@ class _ScanningPageState extends State<ScanningPage> {
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('Ticket No: ${state.ticketModel.ticket}', style: const TextStyle(fontSize: 18)),
-                      Text(state.ticketModel.message, style: const TextStyle(fontSize: 18)),
+                      Text('Ticket No: ${state.ticketModel.ticket.ticketNumber}', style: const TextStyle(fontSize: 18)),
+                      Text(state.ticketModel.message, style: const TextStyle(fontSize: 18,fontStyle: FontStyle.italic)),
                       Text('Total Scanned: ${state.ticketModel.scannedCount}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                     ],
                   ),

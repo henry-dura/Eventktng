@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stadia_scanner/blocs/scan/scan_event.dart';
 import 'package:stadia_scanner/blocs/scan/scan_state.dart';
@@ -23,17 +25,19 @@ class ScanningBloc extends Bloc<ScanningEvent, ScanningState> {
           //   emit(ScanningFailure(error: 'Incorrect Barcode'));
           //   continue;
           // }
-          print('bwhjjwjejrngngvggggggggggggggggggggggggggggg ${barcode.rawValue}');
 
 
-          // Perform the verification using the repository
-          // final data = await repository.verifyTicket(barcode.rawValue!);
-          final ticketModel = await repository.verifyTicket("NPL-17");
-          // print('This is available returne data wqrtwrwtwtyywywhw : $data');
+          String jsonString = '${barcode.rawValue}';
+          Map<String, dynamic> jsonObject = jsonDecode(jsonString); // Decode the JSON string to a Dart map
+
+          // Extract values
+          String event = jsonObject['event'];
+          int ticketNumber = jsonObject['ticketNumber'];
+          String formattedString = "$event-$ticketNumber"; // format output
+
+          final ticketModel = await repository.verifyTicket(formattedString);
 
           emit(ScanningSuccess(ticketModel: ticketModel));
-
-
         }
       } catch (e) {
         emit(ScanningFailure(error: e.toString()));

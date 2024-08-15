@@ -1,23 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:stadia_scanner/welcomePage.dart';
+import 'package:stadia_scanner/welcome_page.dart';
+
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // MongoDatabase mongoDb = MongoDatabase();
-  // await mongoDb.connect();
-  // User user1 = User(
-  //   name: 'Henry IKF',
-  //   regId: '127',
-  //   entryTime: '09:00',
-  //   exitTime: '19:00',
-  //   isCheckedIn: 'true',
-  //   isCheckedOut: 'false',
-  // );
-  // //await mongoDb.insert(user1);
-  // //print('User 1 added successfully');
-  // MongoDatabase.update(
-  //     regId: '123',
-  //     isInEntryMode: false);
   runApp(const MyApp());
 }
 
@@ -35,8 +20,7 @@ class MyApp extends StatelessWidget {
           filled: true,
           fillColor: const Color(0xFFFF6600),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
-          // labelStyle: const TextStyle(color: Colors.white),
-          // floatingLabelStyle: const TextStyle(color: Colors.deepPurpleAccent),
+
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
@@ -55,11 +39,7 @@ class MyApp extends StatelessWidget {
         ),
         brightness: Brightness.light,
       ),
-      //TODO: Change Email and pass
-      //TODO: Remove DebugPrints
-      //TODO: Separate sensitive info
-      //TODO: Setup write/fetch guard
-      //TODO: Enable Database 
+
       home: const WelcomePage(),
     );
   }
