@@ -1,0 +1,9 @@
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+
+  color: "#FFFFFF"
+  image: assets/images/logo_splash.png
+  branding: assets/images/Logodown.png
+  branding_mode: bottom
